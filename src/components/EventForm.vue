@@ -4,23 +4,23 @@
         <form @submit.prevent="submitEvent" class="event-form">
           <div class="form-group">
             <label for="title">Title:</label>
-            <input v-model="event.title" type="text" id="title" required>
+            <input v-model="props.event.title" type="text" id="title" required>
           </div>
           <div class="form-group">
             <label for="dateStart">Start date:</label>
-            <input v-model="event.dateStart" type="date" id="dateStart" required>
+            <input v-model="props.event.dateStart" type="date" id="dateStart" required>
           </div>
           <div class="form-group">
             <label for="dateEnd">End date:</label>
-            <input v-model="event.dateEnd" type="date" id="dateEnd" required>
+            <input v-model="props.event.dateEnd" type="date" id="dateEnd" required>
           </div>
           <div class="form-group">
             <label for="timeStart">Start time:</label>
-            <input v-model="event.timeStart" type="time" id="timeStart" required>
+            <input v-model="props.event.timeStart" type="time" id="timeStart" required>
           </div>
           <div class="form-group">
             <label for="timeEnd">End time:</label>
-            <input v-model="event.timeEnd" type="time" id="timeEnd" required>
+            <input v-model="props.event.timeEnd" type="time" id="timeEnd" required>
           </div>
           <div class="form-group">
             <button type="submit">Add Event</button>
@@ -35,12 +35,15 @@
     export default {
     data() {
       return {
-        event: {
-          title: '',
-          dateStart: '',
-          dateEnd: '',
-          timeStart: '',
-          timeEnd: ''
+        props: {
+            event: {
+                // title: '',
+                // dateStart: '',
+                // dateEnd: '',
+                // timeStart: '',
+                // timeEnd: ''
+                type: Object
+            }
         }
       }
     },
@@ -51,7 +54,13 @@
         this.event.date = '';
         this.event.time = '';
       },
+      cons() {
+        console.log("fgdfgdfg" + this.props.event.title);
+      }
       
+    },
+    mounted() {
+        this.cons();
     }
   }
 </script>

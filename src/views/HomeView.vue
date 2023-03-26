@@ -1,6 +1,6 @@
 <template>
   <Qalendar :events="events" @event-was-clicked="handleEventClick" @edit-event="editEvent" @day-was-clicked="showEventForm" :key="calendarKey" @delete-event="deleteEvent"/>
-  <EventForm v-if="showForm" @add-event="addEvent" @close="close"></EventForm>
+  <EventForm v-if="showForm" @add-event="addEvent" @close="close" :event="newTask"></EventForm>
 </template>
 
 <script>
@@ -35,21 +35,59 @@ export default {
       showForm: '',
       eventDate: '',
       calendarKey: new Date().getTime(),
-      title: '',
-      time: '',
-      color: '',
-      id: '',
-      isEditable: true
+      newTask : {
+        title: 'кккккккккккк',
+        dateStart: '',
+        dateEnd: '',
+        timeStart: '',
+        timeEnd: '',
+      }
     }
   },
   methods: {
     handleEventClick(event) {
       console.log(event);
       console.log(event.clickedEvent.title); // выводим в консоль название события
-      this.title = event.clickedEvent.title;
-      this.time = event.clickedEvent.time;
-      this.color = event.clickedEvent.color;
-      //console.log(`title ${this.title} time ${this.time.start} color ${this.color}`)
+      this.newTask.title = event.clickedEvent.title;
+      const time = event.clickedEvent.time;
+      //console.log(time);
+      console.log(time.start);
+      console.log(time.end);
+      
+      const dateStart = time.start;
+      const dateEnd = time.end;
+      const dateTimeStart = new Date(dateStart)
+      const dateTimeEnd = new Date(dateEnd);
+      //console.log(dateTimeStart);
+      const yearStart = dateTimeStart.getFullYear();
+      const yearEnd = dateTimeEnd.getFullYear();
+      //console.log(`year ${yearStart}`);
+      const monthStart = dateTimeStart.getMonth() + 1;
+      const monthEnd = dateTimeEnd.getMonth() + 1;
+      //console.log(`month ${monthStart}`);
+      const dayStart = dateTimeStart.getDate();
+      const dayEnd = dateTimeEnd.getDate();
+     // console.log(`day ${dayStart} ${typeof(dayStart)}`)
+      const dateStartOne = `${yearStart}-${monthStart < 10 ? '0' + monthStart : monthStart}-${dayStart < 10 ? '0' + dayStart : dayStart}`;
+      const dateEndOne = `${yearEnd}-${monthEnd < 10 ? '0' + monthEnd : monthEnd}-${dayEnd < 10 ? '0' + dayEnd : dayEnd}`;
+      // console.log(`итог ${dateStartOne}`);
+      // console.log(`итог 2 ${dateEndOne}`)
+      const hoursStart = dateTimeStart.getHours();
+      const hoursEnd = dateTimeEnd.getHours();
+      const minutesStart = dateTimeStart.getMinutes();
+      const minutesEnd = dateTimeEnd.getMinutes();
+      const dateStartTwo = `${hoursStart < 10 ? '0' + hoursStart : hoursStart}:${minutesStart < 10 ? '0' + minutesStart : minutesStart}`
+      const dateEndTwo = `${hoursEnd < 10 ? '0' + hoursEnd : hoursEnd}:${minutesEnd < 10 ? '0' + minutesEnd : minutesEnd}`;
+      const str = dateStartOne + ' ' + dateStartTwo; 
+      const str2 = dateEndOne + ' ' + dateEndTwo;
+      //this.newTask.color = event.clickedEvent.color;
+      this.newTask.dateStart = dateStartOne;
+      this.newTask.dateEnd = dateEndOne;
+      this.newTask.timeStart = dateStartTwo;
+      this.newTask.timeEnd = dateEndTwo;
+      console.log(this.newTask);
+      //console.log(`title ${this.newTask.title} timeStart ${this.dateStart} ${this.timeStart} timeEnd ${this.dateEnd} ${this.timeEnd}`);
+     
     },
     editEvent(event) {
 
@@ -87,7 +125,7 @@ export default {
         title: title,
         time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
         color: 'green',
-        id: 3,
+        id: new Date(),
         isEditable: true
       });
       this.calendarKey = new Date().getTime();
@@ -97,7 +135,7 @@ export default {
     },
     deleteEvent(event) {
       this.events = this.events.filter(el => el.id !== event);
-      console.log(this.events);
+      //console.log(this.events);
     },
     close() {
       this.showForm = false;
