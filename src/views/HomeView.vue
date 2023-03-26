@@ -131,30 +131,65 @@ export default {
       const dateEnd = event.dateEnd;
       const timeStart = event.timeStart;
       const timeEnd = event.timeEnd;
+      let newItem = {
+        title : title,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+        timeStart: timeStart,
+        timeEnd: timeEnd,
+        isEditable: true,
+      }
       //console.log(title, dateStart, dateEnd, timeStart, timeEnd);
-      this.events.forEach(el => {
-        if(el.id === this.currentId) {
-          alert('Find')
-          el.title = title;
-          el.dateStart = dateStart;
-          el.dateEnd = dateEnd;
-          el.timeStart = timeStart;
-          el.timeEnd = timeEnd;
-          this.currentId = '';
-        } else {
-            alert('123')
-            this.events.push({
+      let index = this.events.findIndex(item => item.id === this.currentId);
+      if(index === -1) {
+        //this.deleteEvent(this.currentId);
+        this.events.push({
               title: title,
               time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
               color: 'green',
               id: new Date(),
               isEditable: true
             });
-        }
-      })
-      
+            
+      } else {
+        this.events.push({
+              title: title,
+              time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
+              color: 'green',
+              id: new Date(),
+              isEditable: true
+            });
+      }
+      this.deleteEvent(this.currentId);
+      // this.events.forEach(el => {
+      //   if(el.id === this.currentId) {
+      //     alert('Find')
+      //     el.title = title;
+      //     el.dateStart = dateStart;
+      //     el.dateEnd = dateEnd;
+      //     el.timeStart = timeStart;
+      //     el.timeEnd = timeEnd;
+      //     this.currentId = '';
+      //   } else {
+      //       alert('123')
+      //       this.events.push({
+      //         title: title,
+      //         time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
+      //         color: 'green',
+      //         id: new Date(),
+      //         isEditable: true
+      //       });
+      //   }
+      // })
+      console.log('177')
       this.calendarKey = new Date().getTime();
       console.log(this.events)
+      this.currentId = '';
+      this.newTask.title = '';
+      this.newTask.dateEnd = '';
+      this.newTask.dateStart = '';
+      this.newTask.timeEnd = '';
+      this.newTask.timeStart = '';
       this.showForm = false;
       
     },
