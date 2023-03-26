@@ -23,7 +23,7 @@
             <input v-model="task.timeEnd" type="time" id="timeEnd" required>
           </div>
           <div class="form-group">
-            <button type="submit">Add Event</button>
+            <button type="submit">Сохранить</button>
           </div>
         </form>
         <button class="close-button" @click="$emit('close')">X</button>
@@ -44,6 +44,11 @@
         }
       }
     },
+    props: {
+        newObj: {
+            type: Object
+        }
+    },
     methods: {
       submitEvent() {
         this.$emit('add-event', this.task);
@@ -51,9 +56,21 @@
         this.task.date = '';
         this.task.time = '';
       },
+      init() {
+        if(this.newObj.title !== '') {
+            this.task.title = this.newObj.title;
+            this.task.dateStart = this.newObj.dateStart;
+            this.task.dateEnd = this.newObj.dateEnd;
+            this.task.timeStart = this.newObj.timeStart;
+            this.task.timeEnd = this.newObj.timeEnd;
+        }
+      }
       
       
     },
+    mounted() {
+        this.init();
+    }
    
   }
 </script>

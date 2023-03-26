@@ -1,12 +1,13 @@
 <template>
-  <Qalendar :events="events" @event-was-clicked="handleEventClick" @edit-event="editEvent" @day-was-clicked="showEventForm" :key="calendarKey" @delete-event="deleteEvent"/>
-  <EventForm v-if="showForm" @add-event="addEvent" @close="close"></EventForm>
+  <Qalendar :config="config" :events="events" @event-was-clicked="handleEventClick" @edit-event="editEvent" @day-was-clicked="showEventForm" :key="calendarKey" @delete-event="deleteEvent"/>
+  <EventForm v-if="showForm" @add-event="addEvent" @close="close" :newObj="newTask"></EventForm>
 </template>
 
 <script>
 import { Qalendar } from "qalendar";
 import 'qalendar/dist/style.css';
 import EventForm from '@/components/EventForm.vue';
+import { reactive, provide } from 'vue';
 
 export default {
   name: 'HomeView',
@@ -16,6 +17,9 @@ export default {
   },
   data() {
     return {
+      config: {
+        defaultMode: 'month'
+      },
       events: [
         {
           title: "Meeting",
@@ -33,15 +37,17 @@ export default {
         }
       ],
       showForm: '',
+      showEditForm: '',
       eventDate: '',
       calendarKey: new Date().getTime(),
       newTask : {
-        title: 'кккккккккккк',
+        title: '',
         dateStart: '',
         dateEnd: '',
         timeStart: '',
         timeEnd: '',
-      }
+      },
+      currentId: '',
     }
   },
   methods: {
@@ -99,6 +105,11 @@ export default {
       // })
       
       this.showForm = true;
+      //const obj = this.events.find(el => el.id === event);
+      //console.log(obj);
+      //obj = this.newTask;
+      this.currentId = event;
+      //this.events = this.events.filter(el => el.id !== event);
     },
     showEventForm(date) {
       this.showForm = true;
@@ -120,14 +131,28 @@ export default {
       const dateEnd = event.dateEnd;
       const timeStart = event.timeStart;
       const timeEnd = event.timeEnd;
-      console.log(title, dateStart, dateEnd, timeStart, timeEnd);
-      this.events.push({
-        title: title,
-        time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
-        color: 'green',
-        id: new Date(),
-        isEditable: true
-      });
+      //console.log(title, dateStart, dateEnd, timeStart, timeEnd);
+      this.events.forEach(el => {
+        if(el.id === this.currentId) {
+          alert('Find')
+          el.title = title;
+          el.dateStart = dateStart;
+          el.dateEnd = dateEnd;
+          el.timeStart = timeStart;
+          el.timeEnd = timeEnd;
+          this.currentId = '';
+        } else {
+            alert('123')
+            this.events.push({
+              title: title,
+              time: { start: `${dateStart} ${timeStart}`, end: `${dateEnd} ${timeEnd}`},
+              color: 'green',
+              id: new Date(),
+              isEditable: true
+            });
+        }
+      })
+      
       this.calendarKey = new Date().getTime();
       console.log(this.events)
       this.showForm = false;
@@ -139,6 +164,11 @@ export default {
     },
     close() {
       this.showForm = false;
+      this.newTask.title = '';
+      this.newTask.dateStart = '';
+      this.newTask.dateEnd - '';
+      this.newTask.timeStart = '';
+      this.newTask.timeEnd = '';
     },
     
   },
