@@ -1,6 +1,6 @@
 <template>
   <Qalendar :events="events" @event-was-clicked="handleEventClick" @edit-event="editEvent" @day-was-clicked="showEventForm" :key="calendarKey" @delete-event="deleteEvent"/>
-  <EventForm v-if="showForm" @add-event="addEvent" @close="close" :event="newTask"></EventForm>
+  <EventForm v-if="showForm" @add-event="addEvent" @close="close"></EventForm>
 </template>
 
 <script>
@@ -139,8 +139,10 @@ export default {
     },
     close() {
       this.showForm = false;
-    }
-  }
+    },
+    
+  },
+  
 }
 </script>
 

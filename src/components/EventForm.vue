@@ -4,23 +4,23 @@
         <form @submit.prevent="submitEvent" class="event-form">
           <div class="form-group">
             <label for="title">Title:</label>
-            <input v-model="props.event.title" type="text" id="title" required>
+            <input v-model="task.title" type="text" id="title" required>
           </div>
           <div class="form-group">
             <label for="dateStart">Start date:</label>
-            <input v-model="props.event.dateStart" type="date" id="dateStart" required>
+            <input v-model="task.dateStart" type="date" id="dateStart" required>
           </div>
           <div class="form-group">
             <label for="dateEnd">End date:</label>
-            <input v-model="props.event.dateEnd" type="date" id="dateEnd" required>
+            <input v-model="task.dateEnd" type="date" id="dateEnd" required>
           </div>
           <div class="form-group">
             <label for="timeStart">Start time:</label>
-            <input v-model="props.event.timeStart" type="time" id="timeStart" required>
+            <input v-model="task.timeStart" type="time" id="timeStart" required>
           </div>
           <div class="form-group">
             <label for="timeEnd">End time:</label>
-            <input v-model="props.event.timeEnd" type="time" id="timeEnd" required>
+            <input v-model="task.timeEnd" type="time" id="timeEnd" required>
           </div>
           <div class="form-group">
             <button type="submit">Add Event</button>
@@ -35,33 +35,26 @@
     export default {
     data() {
       return {
-        props: {
-            event: {
-                // title: '',
-                // dateStart: '',
-                // dateEnd: '',
-                // timeStart: '',
-                // timeEnd: ''
-                type: Object
-            }
+        task: {
+            title: '',
+            dateStart: '',
+            dateEnd: '',
+            timeStart: '',
+            timeEnd: ''
         }
       }
     },
     methods: {
       submitEvent() {
-        this.$emit('add-event', this.event);
-        this.event.title = '';
-        this.event.date = '';
-        this.event.time = '';
+        this.$emit('add-event', this.task);
+        this.task.title = '';
+        this.task.date = '';
+        this.task.time = '';
       },
-      cons() {
-        console.log("fgdfgdfg" + this.props.event.title);
-      }
+      
       
     },
-    mounted() {
-        this.cons();
-    }
+   
   }
 </script>
  
