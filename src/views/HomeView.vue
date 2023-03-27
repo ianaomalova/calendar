@@ -7,7 +7,7 @@
 import { Qalendar } from "qalendar";
 import 'qalendar/dist/style.css';
 import EventForm from '@/components/EventForm.vue';
-import { reactive, provide } from 'vue';
+
 
 export default {
   name: 'HomeView',
@@ -23,10 +23,12 @@ export default {
       events: [
         {
           title: "Meeting",
+          with: "Владислав Чеканин",
           time: { start: "2023-03-26 10:00", end: "2023-03-26 11:00" },
-          color: "green",
+          color: "blue",
           id: "1",
           isEditable: true,
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores assumenda corporis doloremque et expedita molestias necessitatibus quam quas temporibus veritatis. Deserunt excepturi illum nobis perferendis praesentium repudiandae saepe sapiente voluptatem!"
         },
         {
           title: "Lunch",
